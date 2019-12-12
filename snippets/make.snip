@@ -1,0 +1,6 @@
+snippet     mk
+options     head
+alias       simplest makefile
+abbr gcc -o a.out
+    ${1:target}: $1.c
+        gcc -o $1 $1.c -I.${0}
