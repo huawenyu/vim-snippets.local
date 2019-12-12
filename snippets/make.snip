@@ -1,6 +1,77 @@
 snippet     mk
 options     head
-alias       simplest makefile
-abbr gcc -o a.out
+alias       make
+abbr simplest makefile
     ${1:target}: $1.c
         gcc -o $1 $1.c -I.${0}
+
+
+snippet     mk1
+options     head
+alias       make
+abbr make cflags
+    CC=gcc
+    CFLAGS=-I.
+
+    ${1:target}: $1.o
+    	$(CC) -o $1 $1.o
+
+snippet     mk2
+options     head
+alias       make
+abbr make cflags|deps
+    CC=gcc
+    CFLAGS=-I.
+    DEPS = hellomake.h
+
+    %.o: %.c $(DEPS)
+    	$(CC) -c -o $@ $< $(CFLAGS)
+
+    hellomake: hellomake.o hellofunc.o
+    	$(CC) -o hellomake hellomake.o hellofunc.o
+
+snippet     mk3
+options     head
+alias       make
+abbr make cflags|deps|obj
+    CC=gcc
+    CFLAGS=-I.
+    DEPS = hellomake.h
+    OBJ = hellomake.o hellofunc.o
+
+    %.o: %.c $(DEPS)
+    	$(CC) -c -o $@ $< $(CFLAGS)
+
+    hellomake: $(OBJ)
+    	$(CC) -o $@ $^ $(CFLAGS)
+
+snippet     mk4
+options     head
+alias       make
+abbr make cflags|deps|obj|clean
+    IDIR =../include
+    CC=gcc
+    CFLAGS=-I$(IDIR)
+
+    ODIR=obj
+    LDIR =../lib
+
+    LIBS=-lm
+
+    _DEPS = hellomake.h
+    DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+    _OBJ = hellomake.o hellofunc.o
+    OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+
+
+    $(ODIR)/%.o: %.c $(DEPS)
+    	$(CC) -c -o $@ $< $(CFLAGS)
+
+    hellomake: $(OBJ)
+    	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+
+    .PHONY: clean
+
+    clean:
+    	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
