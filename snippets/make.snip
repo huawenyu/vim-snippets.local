@@ -11,10 +11,13 @@ options     head
 alias       make
 abbr make cflags
     CC=gcc
-    CFLAGS=-I.
+    FLAGS   = # -std=gnu99 -Iinclude
+    CFLAGS  = -fPIC -g # -pedantic -Wall -Wextra -march=native -ggdb3
+    LDFLAGS = -shared
+    CFLAGS  = -I.
 
     ${1:target}: $1.o
-        $(CC) -o $1 $1.o
+        $(CC) $(FLAGS) $(CFLAGS) -o $1 $1.o
 
 snippet     mk2
 options     head
