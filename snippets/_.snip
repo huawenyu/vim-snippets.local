@@ -1,16 +1,63 @@
-snippet     for
+snippet     forr
+abbr        for without int
+alias       for
 options     head
-abbr        for () {}
-    for (${1:int} ${2:i} = ${3:0}; $2 < ${4}; $2++) {
+    for (${1:#:int }${2:i} = ${3:0}; $2 < ${4}; $2++) {
         ${0:#:TARGET}
     }
 
 # Counter based for's (don't ask for the type or count start)
 snippet     fori
+abbr        for directly
+alias       for
 options     head
-abbr        for (int x;...; x++) {}
     for (int ${1:i} = 0; $1 < ${2}; $1++) {
         ${0:#:TARGET}
     }
+
+snippet     verb
+abbr        WAD_ERR_TRACE
+alias       for
+options     head
+    WAD_VERT_TRACE(WAD_DEBUG_${1:#:HTTP}, "${2:format}\n"${3:#:, });
+	${4}
+
+snippet     info
+abbr        WAD_ERR_TRACE
+alias       for
+options     head
+    WAD_INFO_TRACE(WAD_DEBUG_${1:#:HTTP}, "${2:format}\n"${3:#:, });
+	${4}
+
+snippet     warn
+abbr        WAD_ERR_TRACE
+alias       for
+options     head
+    WAD_WARN_TRACE(WAD_DEBUG_${1:#:HTTP}, "${2:format}\n"${3:#:, });
+	${4}
+
+snippet     err
+abbr        WAD_ERR_TRACE
+alias       for
+options     head
+    WAD_ERR_TRACE(WAD_DEBUG_${1:#:HTTP}, "${2:format}\n"${3:#:, });
+	${4}
+
+
+snippet     swi
+abbr        switch for linux
+alias       swi
+options     head
+	switch (${1}) {
+	case ${2}:
+		break;
+	case $2:
+		break;
+	case $2:
+		break;
+	default:
+        ${3};
+	}
+    ${4}
 
 # vim: fdm=marker
