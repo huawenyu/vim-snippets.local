@@ -1,0 +1,204 @@
+snippet     tcl::if
+options     head
+alias       if
+abbr tcl::if
+	if { ${0:#:TARGET} } {
+	}
+
+
+snippet     tcl::if-else
+options     head
+alias       if1
+abbr tcl::if-else
+	if { ${0:#:TARGET} } {
+	} else {
+	}
+
+
+snippet     tcl::if-else2
+options     head
+alias       if2
+abbr tcl::if-elseif-else
+	if { ${0:#:TARGET} } {
+	} elseif {  } {
+	} else {
+	}
+
+
+snippet     tcl::if-else3
+options     head
+alias       if3
+abbr tcl::if info.exists
+	if { [info exists ${0:#:TARGET}] } {
+	}
+
+
+snippet     tcl::if-else4
+options     head
+alias       if4
+abbr tcl::if-else info.exists
+	if { [info exists ${0:#:TARGET}] } {
+	} else {
+	}
+
+
+snippet     ca
+options     head
+alias       ca
+abbr tcl::catch
+	if { ![ catch { open $name r } tmp_fd ] } {
+	} else {
+	}
+
+
+snippet     re
+options     head
+alias       re
+abbr tcl::regexp-if
+	if { [regexp {^(\w*?)$} $matched ${0:#:TARGET}] } {
+	}
+
+
+snippet     re-else
+options     head
+alias       re2
+abbr tcl::regexp-if-else
+	if { [regexp {^(\w*?)$} $matched ${0:#:TARGET}] } {
+	} else {
+	}
+
+
+snippet     sw
+options     head
+alias       sw
+abbr tcl::switch
+	switch -glob -- \$${0:#:TARGET} {
+		"INIT" -
+		"START" {
+		}
+		"CONNECT" {
+		}
+		default {
+		}
+	}
+
+
+snippet     for
+options     head
+alias       for
+abbr tcl::run-once
+	foreach _ {once} {
+        ${0:#:TARGET}
+		break
+	}
+
+snippet     for2
+options     head
+alias       for2
+abbr tcl::foreach-key-value
+	foreach {key val} $${0:#:TARGET} {
+		break
+	}
+
+
+snippet     wh
+options     head
+alias       wh
+abbr tcl::while
+	set run_cnt 0
+	while {$run_cnt < $repeat} {
+		incr run_cnt
+	}
+
+
+snippet     read
+options     head
+alias       read
+abbr tcl::read-file
+	if { [catch { open $name r } tmp_fd] } {
+		exit
+	}
+	while { [gets $tmp_fd line ] != -1 } {
+		incr cline_num
+	}
+	if { ! [eof $tmp_fd] } {
+	}
+	catch { close $tmp_fd }
+
+
+snippet     up
+options     head
+alias       up
+abbr tcl::uplevel
+    #upvar 1 var1 var1
+	#set var1 $var1_
+	uplevel 1 {
+        ${0:#:TARGET}
+		#return -code continue
+	}
+
+
+snippet     obj
+options     head
+alias       obj
+abbr tcl::object
+	MyClass obj_[incr objToken] $arg1
+
+
+snippet     ns
+options     head
+alias       ns
+abbr tcl::namespace
+    namespace eval ${0:#:TARGET} {
+    	namespace export proc1 { arg1 }
+    }
+
+
+snippet     proc
+options     head
+alias       proc
+abbr tcl::proc
+    proc proc1 { ${0:#:TARGET}  } {
+    	global g_var
+    }
+
+
+snippet     proc2
+options     head
+alias       body proc2
+abbr tcl::class-proc
+    itcl::body MyClass::${0:#:TARGET} {} {
+    }
+
+
+snippet     class
+options     head
+alias       class
+abbr itcl::class
+    itcl::class ${0:#:TARGET} {
+    	#inherit Base
+
+    	public variable var1    ""
+
+    	# private:
+    	variable var2 "INIT"
+
+    	method run {}
+
+    	constructor {arg1  {arg2 ""} } {
+    		global g_obj
+
+    		set var1 $arg1
+    		set var2 $arg2
+    		set g_obj $this
+    	}
+
+    	common objToken 0
+    	proc proc1 { } {
+    		global g_var
+    	}
+    }
+
+
+# vim: fdm=marker
+
